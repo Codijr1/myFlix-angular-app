@@ -1,3 +1,5 @@
+<!-- htmlhint attr-lowercase:false -->
+<!DOCTYPE html>
 <mat-card>
     <mat-card-header>
         <mat-card-title>Sign Up!</mat-card-title>
@@ -5,23 +7,23 @@
     <mat-card-content>
         <form>
             <mat-form-field>
-                <input matInput [(ngModel)]="userData.FirstName" placeholder="First Name" type="text" name="First Name"
+                <input matInput [(ngModel)]="userData.FirstName" placeholder="First Name" type="text" name="firstName"
                     required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="userData.LastName" placeholder="Last Name" type="text" name="Last Name"
+                <input matInput [(ngModel)]="userData.LastName" placeholder="Last Name" type="text" name="lastName"
                     required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username"
+                <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="username"
                     required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="userData.Password" type="password" placeholder="Password" name="Password"
+                <input matInput [(ngModel)]="userData.Password" type="password" placeholder="Password" name="password"
                     required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="userData.Email" type="email" placeholder="Email" name="Email" required>
+                <input matInput [(ngModel)]="userData.Email" type="email" placeholder="Email" name="email" required>
             </mat-form-field>
         </form>
     </mat-card-content>
