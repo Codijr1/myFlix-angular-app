@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class FetchApiDataService {
+export class UserRegistrationService {
   private apiUrl = 'api link which I need to find';
 
   constructor(private http: HttpClient) { }
