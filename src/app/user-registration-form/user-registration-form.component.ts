@@ -42,3 +42,5 @@ export class UserRegistrationFormComponent implements OnInit {
     );
   }
 }
+
+//<app-user-registration-form></app-user-registration-form>
