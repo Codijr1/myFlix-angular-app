@@ -1,28 +1,19 @@
-<!-- movie-list.component.html -->
-<div class="movie-list">
-    <h2>Movie List</h2>
-
-    <div *ngIf="movies.length === 0"> <!-- Display message if no movies are found -->
-        No movies available.
-    </div>
-
-    <div *ngFor="let movie of movies"> <!-- Loop through the array of movies -->
-        <mat-card class="movie-card"> <!-- Use Angular Material's card component -->
+<mat-grid-list [cols]="breakpoint" rowHeight="4:3" gutterSize="16px">
+    <mat-grid-tile *ngFor="let movie of movies">
+        <mat-card>
             <mat-card-header>
-                <mat-card-title>{{ movie.title }}</mat-card-title> <!-- Display movie title -->
+                <mat-card-title>{{ movie.title }}</mat-card-title>
+                <mat-card-subtitle>{{ movie.director }}</mat-card-subtitle>
             </mat-card-header>
-
+            <img mat-card-image [src]="movie.posterUrl" alt="{{ movie.title }} poster" /> <!-- Movie poster -->
             <mat-card-content>
-                <p><strong>Director:</strong> {{ movie.director }}</p> <!-- Display director -->
-                <p><strong>Genre:</strong> {{ movie.genre }}</p> <!-- Display genre -->
-                <p><strong>Description:</strong> {{ movie.description }}</p> <!-- Display description -->
+                <p>{{ movie.description }}</p> <!-- Movie description -->
             </mat-card-content>
-
             <mat-card-actions>
                 <button mat-raised-button color="primary" (click)="viewMovieDetails(movie.title)">
                     View Details
                 </button>
             </mat-card-actions>
         </mat-card>
-    </div>
-</div>
+    </mat-grid-tile>
+</mat-grid-list>

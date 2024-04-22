@@ -18,12 +18,14 @@ import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MovieListComponent } from './movie-list/movie-list.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
-  { path: 'movies', component: MovieCardComponent },
+  { path: 'movies', component: MovieListComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
+
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatSnackBarModule,
     RouterModule.forRoot(appRoutes),
-    MatIconModule
+    MatIconModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
