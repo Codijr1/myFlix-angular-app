@@ -10,8 +10,8 @@ describe('MovieCardComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MovieCardComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(MovieCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
