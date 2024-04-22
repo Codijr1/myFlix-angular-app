@@ -7,7 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FetchApiDataService {
-  private apiUrl = 'api link which I need to find';
+  //https://myflixproject-9c1001b14e61.herokuapp.com
+  private apiUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
