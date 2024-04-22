@@ -1,108 +1,59 @@
+// FetchApiDataService.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FetchApiDataService {
-  //https://myflixproject-9c1001b14e61.herokuapp.com
   private apiUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
-  //user registration
+  // User registration
   registerUser(userDetails: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/signup`, userDetails).pipe(
       catchError(this.handleError)
     );
   }
 
-  //user login
+  // User login
   loginUser(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+      map((response: any) => {
+        if (response.token) {
+          localStorage.setItem('jwtToken', response.token); // Store JWT token
+        }
+        return response;
+      }),
       catchError(this.handleError)
     );
   }
 
-  //gt all movies
+  // Create HTTP headers with JWT token for authenticated requests
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('jwtToken');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
+
+  // Get all movies
   getAllMovies(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/movies`).pipe(
+    return this.http.get(`${this.apiUrl}/movies`, { headers: this.getAuthHeaders() }).pipe(
       catchError(this.handleError)
     );
   }
 
-  //get one movie by title
-  getMovieByTitle(title: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/movies/${title}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //get director by name
-  getDirectorByName(name: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/directors/${name}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //get genre by name
-  getGenreByName(name: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/genres/${name}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //get user by username
-  getUserByUsername(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/users/${username}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //get favorite movies for a user
-  getFavoriteMovies(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/users/${username}/movies`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //add a movie to favorite movies
-  addFavoriteMovie(username: string, movieId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users/${username}/movies/${movieId}`, {}).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //edit user data
-  editUser(username: string, userDetails: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/${username}`, userDetails).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //delete user
-  deleteUser(username: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/users/${username}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //delete a movie from favorite movies
-  deleteFavoriteMovie(username: string, movieId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/users/${username}/movies/${movieId}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //error handling
+  // Error handling
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
       console.error(
-        `Error Status code ${error.status}, ` +
+        `Error status code ${error.status}, ` +
         `Error body is: ${error.error}`
       );
     }
