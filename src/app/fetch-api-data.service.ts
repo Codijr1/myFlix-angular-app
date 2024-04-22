@@ -24,7 +24,7 @@ export class FetchApiDataService {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
         if (response.token) {
-          localStorage.setItem('jwtToken', response.token); // Store JWT token
+          localStorage.setItem('jwtToken', response.token); // store JWT token locally
         }
         return response;
       }),
