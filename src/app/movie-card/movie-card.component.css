@@ -1,0 +1,17 @@
+.movie-card {
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    height: fit-content;
+  }
+  
+  .movie-card img {
+    width: auto; 
+    height: 300px; 
+    object-fit: cover; 
+  }
+  
+  .movie-card button {
+    padding: 5px;
+  }
+  

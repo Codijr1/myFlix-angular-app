@@ -1,27 +1,17 @@
-// src/app/movie-card/movie-card.component.ts
-import { Component, OnInit } from '@angular/core';
-import { FetchApiDataService } from '../fetch-api-data.service'
-
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.css']
+  styleUrls: ['./movie-card.component.css'], // Add styles for card layout
 })
 export class MovieCardComponent {
-  movies: any[] = [];
-  constructor(public fetchApiData: FetchApiDataService) { }
+  @Input() movieData: any; // Expects movie data passed from the parent component
 
-  ngOnInit(): void {
-    this.getMovies();
-  }
+  constructor(private router: Router) { }
 
-  getMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-      this.movies = resp;
-      console.log(this.movies);
-      return this.movies;
-    });
+  onViewDetails(): void { // Action to handle when button is clicked
+    this.router.navigate(['/movies', this.movieData.title]);
   }
 }
-

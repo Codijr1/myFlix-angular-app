@@ -1,19 +1,6 @@
-<mat-grid-list [cols]="breakpoint" rowHeight="4:3" gutterSize="16px">
+<!-- movie-list.component.html -->
+<mat-grid-list [cols]="breakpoint" rowHeight="400px" gutterSize="20px">
     <mat-grid-tile *ngFor="let movie of movies">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>{{ movie.title }}</mat-card-title>
-                <mat-card-subtitle>{{ movie.director }}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image [src]="movie.poster" alt="{{ movie.title }} poster" /> <!-- Movie poster -->
-            <mat-card-content>
-                <p>{{ movie.description }}</p> <!-- Movie description -->
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="viewMovieDetails(movie.title)">
-                    View Details
-                </button>
-            </mat-card-actions>
-        </mat-card>
+        <app-movie-card [movieData]="movie"></app-movie-card>
     </mat-grid-tile>
 </mat-grid-list>
