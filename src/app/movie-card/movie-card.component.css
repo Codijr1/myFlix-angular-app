@@ -1,17 +1,28 @@
 .movie-card {
-    text-align: center;
-    cursor: pointer;
+    width: 215px;
+    height: auto;
+}
+
+.mat-card-header {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+}
+
+.movie-card img {
     width: auto;
+    height: 300px;
+    object-fit: cover;
+}
+
+.movie-card-actions {
+    display: flex; 
+    justify-content: center; 
+    gap: 10px;
     height: fit-content;
-  }
-  
-  .movie-card img {
-    width: auto; 
-    height: 300px; 
-    object-fit: cover; 
-  }
-  
-  .movie-card button {
+}
+
+.movie-card button {
     padding: 5px;
-  }
-  
+}

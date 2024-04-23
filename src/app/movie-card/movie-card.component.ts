@@ -4,14 +4,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.css'], // Add styles for card layout
+  styleUrls: ['./movie-card.component.css'],
 })
 export class MovieCardComponent {
-  @Input() movieData: any; // Expects movie data passed from the parent component
+  @Input() movieData: any;
 
   constructor(private router: Router) { }
 
-  onViewDetails(): void { // Action to handle when button is clicked
+  onViewDetails(): void {
     this.router.navigate(['/movies', this.movieData.title]);
   }
 }

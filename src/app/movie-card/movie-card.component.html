@@ -1,13 +1,17 @@
 <mat-card class="movie-card">
-    <mat-card-header>
+    <mat-card-header class="mat-card-header">
         <mat-card-title>{{ movieData.title }}</mat-card-title>
     </mat-card-header>
 
     <img mat-card-image [src]="movieData.poster" alt="{{ movieData.title }} poster" />
 
-    <mat-card-actions>
+    <mat-card-actions class="movie-card-actions">
         <button mat-raised-button color="primary" (click)="onViewDetails()">
             View Details
+        </button>
+
+        <button mat-raised-button color="secondary">
+            +
         </button>
     </mat-card-actions>
 </mat-card>
