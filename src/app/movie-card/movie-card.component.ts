@@ -12,6 +12,6 @@ export class MovieCardComponent {
   constructor(private router: Router) { }
 
   onViewDetails(): void {
-    this.router.navigate(['/movies', this.movieData.title]);
+
   }
 }
