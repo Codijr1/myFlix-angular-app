@@ -6,8 +6,14 @@
     flex: 1; 
   }
   
+
+
   mat-toolbar {
     justify-content: space-between;
     border-radius: 5px;
+  }
+
+  .mat-toolbar{
+    padding: 5px;
   }
   

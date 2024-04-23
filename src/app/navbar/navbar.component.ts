@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthStateService } from '../auth-state.service'; // The new AuthStateService
+import { AuthStateService } from '../auth-state.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +10,7 @@ import { AuthStateService } from '../auth-state.service'; // The new AuthStateSe
 export class NavbarComponent implements OnInit {
   hasToken = false;
 
-  constructor(private router: Router, private authStateService: AuthStateService) { } // Inject AuthStateService
+  constructor(private router: Router, private authStateService: AuthStateService) { }
 
   ngOnInit(): void {
     this.authStateService.loggedIn$.subscribe((isLoggedIn) => {

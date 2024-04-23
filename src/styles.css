@@ -1,11 +1,14 @@
 html, body { height: 100%; }
 body {  font-family: Roboto, "Helvetica Neue", sans-serif;  }
 
-  /* In src/styles.css or src/styles.scss */
-.main-container {
-    padding: 16px;
-    margin-bottom: 20px; /* Space at the bottom */
-  }
-  
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.main-container {
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.navbar-container{
+  padding: 5px;
+}

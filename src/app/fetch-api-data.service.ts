@@ -47,6 +47,8 @@ export class FetchApiDataService {
     );
   }
 
+
+
   // Error handling
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
