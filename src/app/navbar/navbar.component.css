@@ -1,0 +1,13 @@
+.navbar-title {
+    font-size: 1.5em;
+  }
+  
+  .navbar-spacer {
+    flex: 1; 
+  }
+  
+  mat-toolbar {
+    justify-content: space-between;
+    border-radius: 5px;
+  }
+  

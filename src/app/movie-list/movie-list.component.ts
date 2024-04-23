@@ -1,3 +1,4 @@
+//movie-list
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
