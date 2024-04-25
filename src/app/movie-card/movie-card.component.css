@@ -17,12 +17,23 @@
 }
 
 .movie-card-actions {
-    display: flex; 
-    justify-content: center; 
-    gap: 10px;
-    height: fit-content;
-}
+    display: flex;
+    justify-content: space-around;
+    padding: 10px; 
+  }
 
 .movie-card button {
     padding: 5px;
 }
+
+button {
+    width: 5px;
+    height: auto; 
+    border-radius: 5px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 0;
+  }
+
+  

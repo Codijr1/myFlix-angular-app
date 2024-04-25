@@ -1,4 +1,15 @@
-<div class="profile-container">
-    <h2>User's Profile</h2>
-    <p>Your user information will be displayed here.</p>
+<!-- user-profile.component.html -->
+<div class="user-profile">
+    <h2>{{ user.Username }}'s Profile</h2>
+
+    <h3>Favorite Movies</h3>
+    <mat-grid-list [cols]="3" rowHeight="400px" gutterSize="20px">
+        <mat-grid-tile *ngFor="let movie of favoriteMovies">
+            <app-movie-card [movieData]="movie"></app-movie-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <div *ngIf="favoriteMovies.length === 0">
+        <p>No favorite movies found, try adding some and then come back here.</p>
+    </div>
 </div>

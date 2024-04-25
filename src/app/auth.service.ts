@@ -11,6 +11,7 @@ import { map, catchError } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com';
   private tokenKey = 'jwtToken';
+  private userKey = 'userData';
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -20,6 +21,8 @@ export class AuthService {
       map((response: any) => {
         if (response.token) {
           localStorage.setItem(this.tokenKey, response.token); // Store JWT token
+          localStorage.setItem(this.userKey, JSON.stringify(response.user)); // Store user data as a JSON string
+          console.log("Logged in user data:", response.user);
         }
         return response;
       }),

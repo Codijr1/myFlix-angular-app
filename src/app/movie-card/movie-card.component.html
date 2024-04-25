@@ -7,11 +7,14 @@
 
     <mat-card-actions class="movie-card-actions">
         <button mat-raised-button color="primary" (click)="onViewDetails()">
-            View Details
+            <mat-icon>info</mat-icon>
         </button>
 
-        <button mat-raised-button color="secondary">
-            +
+        <button class="button" mat-raised-button color="secondary">
+            <mat-icon>favorite</mat-icon>
+        </button>
+        <button class="button" mat-raised-button color="secondary">
+            <mat-icon>remove_circle</mat-icon>
         </button>
     </mat-card-actions>
 </mat-card>

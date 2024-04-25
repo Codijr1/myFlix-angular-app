@@ -24,7 +24,7 @@ export class FetchApiDataService {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
         if (response.token) {
-          localStorage.setItem('jwtToken', response.token); // store JWT token locally
+          localStorage.setItem('jwtToken', response.token); // stores JWT token locally
         }
         return response;
       }),
@@ -32,7 +32,6 @@ export class FetchApiDataService {
     );
   }
 
-  // Create HTTP headers with JWT token for authenticated requests
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('jwtToken');
     return new HttpHeaders({
@@ -47,6 +46,26 @@ export class FetchApiDataService {
     );
   }
 
+  getUserProfile(username: string): Observable<any> {
+    const token = localStorage.getItem('jwtToken');
+
+    if (!token) {
+      console.error('Token not found');
+      return throwError('Authorization token is missing');
+    }
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.get(`${this.apiUrl}/users/${username}`, { headers }).pipe(
+      map((response: any) => {
+        console.log('Fetched user profile:', response);
+        return response;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching user profile:', error);
+        return throwError('Failed to fetch user profile');
+      })
+    );
+  }
 
 
   // Error handling

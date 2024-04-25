@@ -18,7 +18,7 @@ export class UserLoginFormComponent {
     public snackBar: MatSnackBar,
     private router: Router,
     private authService: AuthService,
-    private authStateService: AuthStateService // Inject AuthStateService
+    private authStateService: AuthStateService
   ) { }
 
   login(): void {
