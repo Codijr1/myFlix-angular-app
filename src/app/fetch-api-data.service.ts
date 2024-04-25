@@ -1,7 +1,7 @@
 // FetchApiDataService.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -39,6 +39,14 @@ export class FetchApiDataService {
     });
   }
 
+  private userProfileSubject = new BehaviorSubject<any>({});
+  getUserProfileObservable(): Observable<any> {
+    return this.userProfileSubject.asObservable();
+  }
+  setUserProfile(userProfile: any): void {
+    this.userProfileSubject.next(userProfile);
+  }
+
   // Get all movies
   getAllMovies(): Observable<any> {
     return this.http.get(`${this.apiUrl}/movies`, { headers: this.getAuthHeaders() }).pipe(
@@ -57,7 +65,7 @@ export class FetchApiDataService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     return this.http.get(`${this.apiUrl}/users/${username}`, { headers }).pipe(
       map((response: any) => {
-        console.log('Fetched user profile:', response);
+        this.setUserProfile(response);
         return response;
       }),
       catchError((error: HttpErrorResponse) => {
@@ -67,6 +75,25 @@ export class FetchApiDataService {
     );
   }
 
+  addMovieToFavorites(username: string, movieId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/${username}/movies/${movieId}`, {}, { headers: this.getAuthHeaders() }).pipe(
+      map((updatedUser) => {
+        this.setUserProfile(updatedUser);
+        return updatedUser;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  removeMovieFromFavorites(username: string, movieId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${username}/movies/${movieId}`, { headers: this.getAuthHeaders() }).pipe(
+      map((updatedUser) => {
+        this.setUserProfile(updatedUser);
+        return updatedUser;
+      }),
+      catchError(this.handleError)
+    );
+  }
 
   // Error handling
   private handleError(error: HttpErrorResponse): Observable<any> {

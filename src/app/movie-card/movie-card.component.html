@@ -10,11 +10,13 @@
             <mat-icon>info</mat-icon>
         </button>
 
-        <button class="button" mat-raised-button color="secondary">
+        <button class="button" mat-raised-button color="secondary" (click)="onAddToFavorites()">
             <mat-icon>favorite</mat-icon>
         </button>
-        <button class="button" mat-raised-button color="secondary">
+
+        <button class="button" mat-raised-button color="secondary" (click)="onRemoveFromFavorites()">
             <mat-icon>remove_circle</mat-icon>
         </button>
+
     </mat-card-actions>
 </mat-card>
