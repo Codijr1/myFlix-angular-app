@@ -2,15 +2,15 @@
     <span class="navbar-title">myFlix Angular Demo</span>
     <span class="navbar-spacer"></span>
 
-    <a mat-button *ngIf="hasToken" [routerLink]="['/movies']">
+    <a mat-button [routerLink]="['/movies']">
         <mat-icon>home</mat-icon> Home
     </a>
 
-    <a mat-button *ngIf="hasToken" [routerLink]="['/profile']">
+    <a mat-button [routerLink]="['/profile']">
         <mat-icon>person</mat-icon> My Profile
     </a>
 
-    <a mat-button *ngIf="hasToken" (click)="onLogout()">
+    <a mat-button (click)="onLogout()">
         <mat-icon>exit_to_app</mat-icon> Logout
     </a>
 </mat-toolbar>

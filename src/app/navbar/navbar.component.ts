@@ -1,26 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthStateService } from '../auth-state.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
-  hasToken = false;
-
-  constructor(private router: Router, private authStateService: AuthStateService) { }
-
-  ngOnInit(): void {
-    this.authStateService.loggedIn$.subscribe((isLoggedIn) => {
-      this.hasToken = isLoggedIn;
-    });
-  }
+export class NavbarComponent {
+  constructor(private router: Router, private authService: AuthService) { }
 
   onLogout(): void {
-    localStorage.removeItem('jwtToken'); // Remove JWT
-    this.authStateService.setLoggedIn(false); // Update the state
-    this.router.navigate(['welcome']); // Navigate to welcome
+    this.authService.logout(); // Handle logout, remove JWT, redirect to login
+    this.router.navigate(['welcome']); // Navigate to the welcome page after logout
   }
 }

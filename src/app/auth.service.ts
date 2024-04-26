@@ -1,46 +1,59 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com';
   private tokenKey = 'jwtToken';
-  private userKey = 'userData';
+  private userSubject = new BehaviorSubject<any>(null); // User state management
+  public user$: Observable<any> = this.userSubject.asObservable(); // Observable for real-time updates
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    // Load initial user data from local storage
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      this.userSubject.next(JSON.parse(storedUser)); // Set initial user state
+    }
+  }
 
-  // Login user and store the token
+  // User login and store JWT token
   loginUser(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
         if (response.token) {
           localStorage.setItem(this.tokenKey, response.token); // Store JWT token
-          localStorage.setItem(this.userKey, JSON.stringify(response.user)); // Store user data as a JSON string
+          this.userSubject.next(response.user); // Set user state
           console.log("Logged in user data:", response.user);
         }
         return response;
       }),
       catchError((error) => {
         console.error('Login error:', error);
-        throw error;
+        return throwError('Login failed');
       })
     );
   }
 
-  // Check if user is logged in (by checking if token is stored)
+  // Check if the user is logged in
   isLoggedIn(): boolean {
     return localStorage.getItem(this.tokenKey) !== null;
   }
 
-  // Log out the user by removing the token
+  // User logout and clear state
   logout(): void {
     localStorage.removeItem(this.tokenKey); // Clear JWT token
-    this.router.navigate(['/login']); // Redirect to login page or home
+    this.userSubject.next(null); // Clear user state
+    this.router.navigate(['/login']); // Redirect on logout
+  }
+
+  // Error handling
+  private handleError(error: HttpErrorResponse): Observable<any> {
+    // Custom error handling logic
+    return throwError('An error occurred, please try again later.');
   }
 }

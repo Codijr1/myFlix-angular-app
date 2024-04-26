@@ -3,22 +3,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { AuthStateService } from '../auth-state.service'; // Inject AuthStateService
 
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
-  styleUrls: ['./user-login-form.component.css']
+  styleUrls: ['./user-login-form.component.css'],
 })
 export class UserLoginFormComponent {
-  @Input() loginData = { Username: '', Password: '' };
+  @Input() loginData = { Username: '', Password: '' }; // Credentials for login
 
   constructor(
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
-    public snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private router: Router,
-    private authService: AuthService,
-    private authStateService: AuthStateService
+    private authService: AuthService // Use AuthService for authentication
   ) { }
 
   login(): void {
@@ -29,19 +27,17 @@ export class UserLoginFormComponent {
 
     this.authService.loginUser(credentials).subscribe(
       (response) => {
-        localStorage.setItem('jwtToken', response.token); // Store JWT
+        // Close the dialog and navigate to movies on successful login
         this.dialogRef.close();
-
-        // Set login state to true
-        this.authStateService.setLoggedIn(true);
 
         this.snackBar.open('Login successful', 'OK', {
           duration: 2000,
         });
 
-        this.router.navigate(['movies']); // Navigate to movies
+        this.router.navigate(['movies']); // Redirect to movies page
       },
       (error) => {
+        // Handle login errors
         this.snackBar.open(
           'Login failed: ' + (error.error?.message || 'An error occurred'),
           'OK',
