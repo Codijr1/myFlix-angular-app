@@ -1,33 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
+  styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
   user: any = {}; // User object
-  favoriteMovies: any[] = []; // Initialize empty array for favorites
+  favoriteMovies: any[] = []; // List of favorite movies
+  breakpoint: number = 3;
 
   constructor(
     private fetchApiData: FetchApiDataService,
-    private snackBar: MatSnackBar
+    private breakpointObserver: BreakpointObserver // For responsive grid
   ) { }
 
   ngOnInit(): void {
-    const userData = localStorage.getItem('userData'); // Retrieve user data from local storage
+    // Observe the behavior subject for user data updates
+    this.fetchApiData.getUserProfileObservable().subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.loadFavoriteMovies(); // Refresh favorite movies when data changes
+      }
+    });
 
-    if (userData) {
-      this.user = JSON.parse(userData); // Parse the stored data
+    // Adjust breakpoint for responsive design
+    this.breakpointObserver.observe(['(max-width: 600px)', '(max-width: 900px)']).subscribe((state) => {
+      this.breakpoint = state.breakpoints['(max-width: 600px)'] ? 1 :
+        state.breakpoints['(max-width: 900px)'] ? 2 : 3;
+    });
+  }
 
-      // Fetch all movies and then match with favorite movie IDs
-      this.fetchApiData.getAllMovies().subscribe((movies: any[]) => {
-        this.favoriteMovies = this.user.favoriteMovies.map((movieId: string) =>
-          movies.find((m) => m._id === movieId)
-        ).filter(Boolean);
-      });
-    }
+  loadFavoriteMovies(): void {
+    this.fetchApiData.getAllMovies().subscribe((movies: any[]) => {
+      this.favoriteMovies = this.user.favoriteMovies.map((movieId: string) =>
+        movies.find((m) => m._id === movieId)
+      ).filter(Boolean);
+    });
   }
 }

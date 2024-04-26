@@ -2,7 +2,7 @@
     <h2>{{ user.Username }}'s Profile</h2>
 
     <h3>Favorite Movies</h3>
-    <mat-grid-list [cols]="3" rowHeight="400px" gutterSize="20px">
+    <mat-grid-list [cols]="breakpoint" rowHeight="400px" gutterSize="20px">
         <mat-grid-tile *ngFor="let movie of favoriteMovies">
             <app-movie-card [movieData]="movie"></app-movie-card>
         </mat-grid-tile>
