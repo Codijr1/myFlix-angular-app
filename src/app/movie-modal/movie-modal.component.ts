@@ -1,10 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 
-const dialogConfig = new MatDialogConfig();
-dialogConfig.autoFocus = true; // Auto-focus on dialog open
-dialogConfig.width = 'auto'; // Allow dialog to adjust
-dialogConfig.height = 'auto'; // Auto height based on content
 
 @Component({
   selector: 'app-movie-modal',
