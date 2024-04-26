@@ -1,0 +1,64 @@
+/* General styling for the modal */
+.movie-modal {
+    display: flex; /* Flex layout for the modal */
+    flex-direction: column; /* Vertical layout */
+    align-items: center; /* Center horizontally */
+  }
+  
+  /* Styling for the modal content */
+  .mat-dialog-content {
+    padding: 16px; /* Consistent padding */
+    font-family: 'Roboto', sans-serif; /* Standard font */
+    font-size: 14px; /* Readable font size */
+    display: flex; /* Flex layout */
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center content horizontally */
+  }
+  
+  /* Ensure the modal adjusts to content and avoids scrollbars */
+  .mat-dialog-container {
+    display: flex; /* Use flex to adjust layout */
+    flex-direction: column; /* Vertical stacking */
+    height: fit-content; /* Allow it to adjust */
+    overflow: auto; /* Allow scrolling if needed */
+    max-width: 50vw;
+  }
+  
+  /* Padding and alignment for action buttons */
+  .mat-dialog-actions {
+    padding: 8px 16px; /* Padding for action buttons */
+    justify-content: space-around; /* Space buttons evenly */
+    display: flex; /* Flex layout */
+    align-items: center; /* Center vertically */
+  }
+  
+  /* Centered title with a consistent margin */
+  .mat-dialog-title {
+    text-align: center; /* Center the title */
+    margin-bottom: 16px; /* Space between the title and content */
+  }
+  
+  /* Styles for movie images */
+  .movie-modal-image {
+    display: block; /* Display as a block */
+    margin: 0 auto; /* Center horizontally */
+    max-height: 300px; /* Limit the image height */
+    object-fit: cover; /* Maintain aspect ratio */
+  }
+  
+  /* Margin for text elements */
+  .movie-modal-text {
+    margin: 8px 0; /* Margin between text elements */
+  }
+  
+  /* Button styling and spacing */
+  .movie-modal-button {
+    margin: 0 8px; /* Consistent margin between buttons */
+  }
+  
+  /* Emphasis styling for strong text */
+  .movie-modal-text strong {
+    color: #3f51b5; /* Primary color for emphasis */
+    font-weight: bold; /* Bold text */
+  }
+  

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { MovieModalComponent } from '../movie-modal/movie-modal.component';
 
 @Component({
   selector: 'app-movie-card',
@@ -9,16 +11,23 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./movie-card.component.css'],
 })
 export class MovieCardComponent {
-  @Input() movieData: any; // Data for the movie card
+  @Input() movieData: any; // Data for the movie cardselector: 'app-movie-card
 
   constructor(
     private router: Router,
     private fetchApiData: FetchApiDataService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) { }
 
   onViewDetails(): void {
-    this.router.navigate(['/movies', this.movieData._id]); // Navigate to movie details page
+    const dialogRef = this.dialog.open(MovieModalComponent, {
+      data: { movieData: this.movieData },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The modal was closed');
+    });
   }
 
   onAddToFavorites(): void {

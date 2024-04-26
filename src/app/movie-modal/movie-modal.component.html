@@ -1,0 +1,18 @@
+<!-- movie-modal.component.html -->
+<mat-dialog-content class="movie-modal-content">
+    <h2 class="movie-modal-title">{{ movieData.title }}</h2>
+    <img class="movie-modal-image" [src]="movieData.poster" alt="{{ movieData.title }} poster" />
+
+    <!-- Movie Details -->
+    <div class="movie-modal-details">
+        <p class="movie-modal-text"><strong>Release Year:</strong> {{ movieData.year }}</p>
+        <p class="movie-modal-text"><strong>Director(s):</strong> {{ movieData.director }}</p>
+        <p class="movie-modal-text"><strong>Genre(s):</strong> {{ movieData.genre }}</p>
+        <p class="movie-modal-text"><strong>Plot:</strong> {{ movieData.description }}</p>
+    </div>
+</mat-dialog-content>
+
+<!-- Action Buttons -->
+<mat-dialog-actions class="movie-modal-actions">
+    <button mat-raised-button color="primary" (click)="close()">Close</button>
+</mat-dialog-actions>

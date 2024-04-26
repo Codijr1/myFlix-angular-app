@@ -23,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarComponent } from './navbar/navbar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MovieModalComponent } from './movie-modal/movie-modal.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -40,7 +41,8 @@ const appRoutes: Routes = [
     WelcomePageComponent,
     MovieListComponent,
     NavbarComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    MovieModalComponent
   ],
   imports: [
     BrowserModule,

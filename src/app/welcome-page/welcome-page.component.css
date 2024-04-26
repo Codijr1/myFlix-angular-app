@@ -1,0 +1,34 @@
+html, body {
+    height: 100%; /* Ensure the entire viewport is used */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .full-screen-container {
+    display: flex; /* Flexbox to center content */
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    height: 96vh;
+    background:#d1d8ff ;
+    border-radius: 10px;
+  }
+  
+  .welcome-page {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center vertically within the page */
+    align-items: center; /* Center horizontally within the page */
+    height: 30vh;
+    width: 30vw; /* Width of the welcome page */
+    min-width: 222px;
+    padding: 20px; /* Spacing */
+    background: #91a2ff; /* Background color for contrast */
+    color: white; /* Text color */
+    border-radius: 10px; /* Rounded corners for aesthetic */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: all 0.3s ease; /* Smooth transitions */
+  }
+  
+  .welcome-page:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+  }
+  
