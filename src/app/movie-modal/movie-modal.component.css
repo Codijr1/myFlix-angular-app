@@ -13,6 +13,7 @@
     display: flex; /* Flex layout */
     flex-direction: column; /* Stack content vertically */
     align-items: center; /* Center content horizontally */
+    border-radius: 10px;
   }
   
   /* Ensure the modal adjusts to content and avoids scrollbars */

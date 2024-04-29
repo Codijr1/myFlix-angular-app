@@ -1,34 +1,38 @@
+/* Apply to the entire page to ensure no scroll bars and full-page content */
 html, body {
-    height: 100%; /* Ensure the entire viewport is used */
-    margin: 0; /* Remove default margin */
-  }
-  
-  .full-screen-container {
-    display: flex; /* Flexbox to center content */
-    justify-content: center; /* Horizontal centering */
-    align-items: center; /* Vertical centering */
-    height: 96vh;
-    background:#d1d8ff ;
-    border-radius: 10px;
-  }
-  
-  .welcome-page {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: center; /* Center vertically within the page */
-    align-items: center; /* Center horizontally within the page */
-    height: 30vh;
-    width: 30vw; /* Width of the welcome page */
-    min-width: 222px;
-    padding: 20px; /* Spacing */
-    background: #91a2ff; /* Background color for contrast */
-    color: white; /* Text color */
-    border-radius: 10px; /* Rounded corners for aesthetic */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    transition: all 0.3s ease; /* Smooth transitions */
-  }
-  
-  .welcome-page:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
-  }
-  
+  height: 100%; /* Use the entire viewport height */
+  margin: 0; /* No default margin */
+  padding: 0; /* No default padding */
+  overflow: hidden; /* No scroll bars */
+}
+
+/* A full-screen container to center the welcome page */
+.full-screen-container {
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 95vh; /* Full viewport height */
+  background: #d1d8ff; /* Background color */
+}
+
+/* Styles for the welcome page */
+.welcome-page {
+  display: flex; /* Flex layout */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  height: auto; /* Fit the content */
+  min-height: 30vh; /* Minimum height for content */
+  width: auto; /* Allow width to adjust to content */
+  padding: 20px; /* Padding for spacing */
+  background: #91a2ff; /* Background color */
+  color: white; /* Text color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Light shadow */
+  transition: all 0.3s ease; /* Smooth transition effects */
+}
+
+/* Style the welcome page on hover */
+.welcome-page:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
