@@ -24,6 +24,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MovieModalComponent } from './movie-modal/movie-modal.component';
+import { UpdateProfileModalComponent } from './update-profile-modal/update-profile-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -42,7 +46,8 @@ const appRoutes: Routes = [
     MovieListComponent,
     NavbarComponent,
     UserProfileComponent,
-    MovieModalComponent
+    MovieModalComponent,
+    UpdateProfileModalComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,11 @@ const appRoutes: Routes = [
     MatIconModule,
     MatGridListModule,
     MatToolbarModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes),
+    CommonModule,
   ],
+
   providers: [
     provideAnimationsAsync()
   ],

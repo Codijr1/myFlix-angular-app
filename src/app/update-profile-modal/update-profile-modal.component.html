@@ -1,0 +1,30 @@
+<h2>Update Profile</h2>
+<form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+    <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="FirstName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="LastName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="Username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="Password" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="Email" />
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" [disabled]="!profileForm.valid">Update</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</form>

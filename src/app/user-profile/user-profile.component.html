@@ -1,6 +1,10 @@
 <div class="user-profile">
     <h2>{{ user.Username }}'s Profile</h2>
 
+    <button mat-raised-button color="primary" (click)="openUpdateProfileModal()">
+        Edit Profile
+    </button>
+
     <h3>Favorite Movies</h3>
     <mat-grid-list [cols]="breakpoint" rowHeight="400px" gutterSize="20px">
         <mat-grid-tile *ngFor="let movie of favoriteMovies">

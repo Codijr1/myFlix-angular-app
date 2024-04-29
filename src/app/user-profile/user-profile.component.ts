@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateProfileModalComponent } from '../update-profile-modal/update-profile-modal.component';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
   user: any = {}; // User object
@@ -14,11 +16,11 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private fetchApiData: FetchApiDataService,
-    private breakpointObserver: BreakpointObserver // For responsive grid
+    private breakpointObserver: BreakpointObserver, // For responsive grid
+    private dialog: MatDialog // For opening modals
   ) { }
 
   ngOnInit(): void {
-    // Observe the behavior subject for user data updates
     this.fetchApiData.getUserProfileObservable().subscribe((user) => {
       if (user) {
         this.user = user;
@@ -26,11 +28,15 @@ export class UserProfileComponent implements OnInit {
       }
     });
 
-    // Adjust breakpoint for responsive design
     this.breakpointObserver.observe(['(max-width: 600px)', '(max-width: 900px)']).subscribe((state) => {
       this.breakpoint = state.breakpoints['(max-width: 600px)'] ? 1 :
         state.breakpoints['(max-width: 900px)'] ? 2 : 3;
     });
+  }
+
+  // Method to open the update profile modal
+  openUpdateProfileModal(): void {
+    this.dialog.open(UpdateProfileModalComponent);
   }
 
   loadFavoriteMovies(): void {

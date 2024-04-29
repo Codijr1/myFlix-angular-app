@@ -101,21 +101,20 @@ export class FetchApiDataService {
     );
   }
 
-  // Update user profile
-  updateUserProfile(username: string, updatedInfo: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.put(`${this.apiUrl}/users/${username}`, updatedInfo, { headers }).pipe(
-      map((response) => {
-        this.setUserProfile(response); // Emit updated user data
-        localStorage.setItem('userData', JSON.stringify(response)); // Store updated data
-        return response;
+  // Update user profile information
+  updateUserProfile(username: string, userProfileUpdates: any): Observable<any> {
+    const headers = this.getAuthHeaders(); // Obtain authorization headers
+    return this.http.put(`${this.apiUrl}/users/${username}`, userProfileUpdates, { headers }).pipe(
+      map((updatedUser) => {
+        this.setUserProfile(updatedUser); // Emit updated user data after updating
+        return updatedUser;
       }),
-      catchError(this.handleError),
+      catchError(this.handleError), // Handle errors
     );
   }
 
 
-  //error
+  //errors
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
