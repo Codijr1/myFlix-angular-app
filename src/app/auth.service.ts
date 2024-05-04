@@ -4,58 +4,102 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 
+/**
+ * Service for user authentication, providing login, logout, and token management.
+ * 
+ * @service AuthService
+ */
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
+  /**
+  * Base URL for the API.
+  */
   private apiUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com';
+  /**
+   * Key used for storing the JWT token in local storage.
+   */
   private tokenKey = 'jwtToken';
-  private userKey = 'userData'; // Key for storing user data
-  private userSubject = new BehaviorSubject<any>(null); // BehaviorSubject to manage user state
+  /**
+   * Key used for storing user data in local storage.
+   */
+  private userKey = 'userData';
+  /**
+  * BehaviorSubject to track the current user state.
+  */
+  private userSubject = new BehaviorSubject<any>(null);
+  /**
+   * Observable to provide user state updates.
+   */
 
-  public user$: Observable<any> = this.userSubject.asObservable(); // Observable for components to subscribe to
+  public user$: Observable<any> = this.userSubject.asObservable();
 
+  /**
+   * Constructor for AuthService.
+   *
+   * @param {HttpClient} http - Angular HTTP client for API requests.
+   * @param {Router} router - Angular router for navigation.
+   */
   constructor(private http: HttpClient, private router: Router) {
-    // Load initial user data from local storage
+
     const storedUser = localStorage.getItem(this.userKey);
     if (storedUser) {
-      this.userSubject.next(JSON.parse(storedUser)); // Set initial user state
+      this.userSubject.next(JSON.parse(storedUser));
     }
   }
 
-  // User login and store JWT token and user data
+  /**
+     * Logs in a user with the given credentials.
+     *
+     * @param {Object} credentials - The login credentials (username and password).
+     * @returns {Observable<any>} An observable with the login response.
+     */
   loginUser(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
         if (response.token) {
-          localStorage.setItem(this.tokenKey, response.token); // Store JWT token
-          localStorage.setItem(this.userKey, JSON.stringify(response.user)); // Store user data
-          this.userSubject.next(response.user); // Emit user state
+          localStorage.setItem(this.tokenKey, response.token);
+          localStorage.setItem(this.userKey, JSON.stringify(response.user));
+          this.userSubject.next(response.user);
           console.log("Logged in user data:", response.user);
         }
         return response;
       }),
       catchError((error) => {
         console.error('Login error:', error);
-        return throwError('Login failed'); // Emit error in case of failure
+        return throwError('Login failed');
       })
     );
   }
 
-  // Check if the user is logged in
+  /**
+    * Checks if the user is logged in by verifying the presence of a JWT token.
+    *
+    * @returns {boolean} True if the user is logged in, otherwise false.
+    */
   isLoggedIn(): boolean {
     return localStorage.getItem(this.tokenKey) !== null;
   }
 
-  // User logout and clear state
+  /**
+   * Logs out the current user, clears tokens and user data from local storage,
+   * and navigates to the login page.
+   */
   logout(): void {
-    localStorage.removeItem(this.tokenKey); // Clear JWT token
-    localStorage.removeItem(this.userKey); // Clear user data from local storage
-    this.userSubject.next(null); // Emit null to clear user state
-    this.router.navigate(['/login']); // Redirect to login page
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+    this.userSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
-  // Error handling
+  /**
+     * Handles HTTP errors for API requests.
+     *
+     * @param {HttpErrorResponse} error - The HTTP error response.
+     * @returns {Observable<any>} An observable that throws an error message.
+     */
   private handleError(error: HttpErrorResponse): Observable<any> {
     return throwError('An error occurred, please try again later.');
   }

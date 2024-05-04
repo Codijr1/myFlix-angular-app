@@ -7,14 +7,31 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateProfileModalComponent } from '../update-profile-modal/update-profile-modal.component';
 import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
 
+/**
+ * Component for displaying and managing user profiles, including updating profile,
+ * managing favorite movies, and deleting user accounts.
+ * 
+ * @component UserProfileComponent
+ * @implements OnInit
+ * @selector app-user-profile
+ */
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
+  /**
+  * User data.
+  */
   user: any = {};
+  /**
+   * List of the user's favorite movies.
+   */
   favoriteMovies: any[] = [];
+  /**
+   * Number of columns in the grid layout, depending on the screen size.
+   */
   breakpoint: number = 3;
 
   constructor(
@@ -25,6 +42,10 @@ export class UserProfileComponent implements OnInit {
     private router: Router
   ) { }
 
+  /**
+   * Angular lifecycle hook for component initialization.
+   * Loads the user profile and favorite movies, and sets the grid layout based on screen size.
+   */
   ngOnInit(): void {
     this.fetchApiData.getUserProfileObservable().subscribe((user) => {
       if (user) {
@@ -39,10 +60,17 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a modal to update the user profile.
+   */
   openUpdateProfileModal(): void {
     this.dialog.open(UpdateProfileModalComponent);
   }
 
+  /**
+   * Opens a dialog to confirm account deletion.
+   * If the dialog is confirmed, the user account is deleted.
+   */
   openDeleteAccountDialog(): void {
     const dialogRef = this.dialog.open(DeleteAccountDialogComponent);
 
@@ -53,6 +81,9 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads the user's favorite movies from the list of all movies.
+   */
   loadFavoriteMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((movies: any[]) => {
       this.favoriteMovies = this.user.favoriteMovies.map((movieId: string) =>
@@ -61,6 +92,11 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes the user account.
+   * Shows a confirmation message upon successful deletion and redirects to the welcome page.
+   * If the deletion fails, displays an error message.
+   */
   deleteUserAccount(): void {
     const username = this.user.Username;
     this.fetchApiData.deleteUserAccount(username).subscribe(

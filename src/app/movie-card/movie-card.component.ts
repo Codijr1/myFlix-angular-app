@@ -5,13 +5,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieModalComponent } from '../movie-modal/movie-modal.component';
 
+/**
+ * Component for displaying a card for a movie, with options to view details,
+ * add to favorites, and remove from favorites.
+ * 
+ * @component MovieCardComponent
+ * @selector app-movie-card
+ */
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.css'],
 })
 export class MovieCardComponent {
-  @Input() movieData: any; // Data for the movie cardselector: 'app-movie-card
+
+  /**
+   * Data for the movie card.
+   */
+  @Input() movieData: any;
 
   constructor(
     private router: Router,
@@ -20,6 +31,9 @@ export class MovieCardComponent {
     private dialog: MatDialog,
   ) { }
 
+  /**
+   * Opens a modal dialog to view detailed information about the movie.
+   */
   onViewDetails(): void {
     const dialogRef = this.dialog.open(MovieModalComponent, {
       data: { movieData: this.movieData },
@@ -30,6 +44,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+  * Adds the current movie to the user's list of favorite movies.
+  * Displays a snack bar message upon success or failure.
+  */
   onAddToFavorites(): void {
     const storedUser = localStorage.getItem('userData');
     let isAlreadyFavorite = false;
@@ -45,7 +63,7 @@ export class MovieCardComponent {
       return;
     }
 
-    //add  movie to favorites if it's not already there
+    //Add  movie to favorites if it's not already there
     this.fetchApiData.addMovieToFavorites('Username', this.movieData._id).subscribe({
       next: (updatedUser) => {
         this.snackBar.open('Added to favorites', 'Close', { duration: 3000 });
@@ -59,7 +77,10 @@ export class MovieCardComponent {
     });
   }
 
-
+  /**
+   * Removes the current movie from the user's list of favorite movies.
+   * Displays a snack bar message upon success or failure.
+   */
   onRemoveFromFavorites(): void {
     const username = this.getUsernameFromStorage();
 
@@ -77,6 +98,11 @@ export class MovieCardComponent {
     }
   }
 
+  /**
+   * Updates the user's list of favorite movies in local storage.
+   * 
+   * @param {boolean} add - Whether to add or remove the current movie.
+   */
   private updateUserFavorites(add: boolean): void {
     const storedUser = localStorage.getItem('userData');
 
@@ -95,6 +121,11 @@ export class MovieCardComponent {
     }
   }
 
+  /**
+   * Retrieves the username from local storage.
+   * 
+   * @returns {string | null} The stored username, or null if not found.
+   */
   private getUsernameFromStorage(): string | null {
     const storedUser = localStorage.getItem('userData');
 

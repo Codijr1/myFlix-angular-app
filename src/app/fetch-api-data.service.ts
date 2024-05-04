@@ -5,14 +5,32 @@ import { catchError, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
-
+/**
+ * Service for interacting with the API, including user authentication, fetching movies, and user profile management.
+ * 
+ * @service FetchApiDataService
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class FetchApiDataService {
+  /**
+   * Base URL for the API.
+   */
   private apiUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com';
+  /**
+   * BehaviorSubject to manage user profile state.
+   */
   private userProfileSubject = new BehaviorSubject<any>({});
 
+
+  /**
+   * Constructor for FetchApiDataService.
+   *
+   * @param {HttpClient} http - Angular HTTP client for making HTTP requests.
+   * @param {MatSnackBar} snackBar - Angular Material Snackbar for user feedback.
+   * @param {Router} router - Angular router for navigation.
+   */
   constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router) {
     const storedUser = localStorage.getItem('userData');
     if (storedUser) {
@@ -20,6 +38,11 @@ export class FetchApiDataService {
     }
   }
 
+  /**
+   * Retrieves the authorization headers with the stored JWT token.
+   * 
+   * @returns {HttpHeaders} The authorization headers with the JWT token.
+   */
   getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('jwtToken');
     return new HttpHeaders({
@@ -27,23 +50,43 @@ export class FetchApiDataService {
     });
   }
 
+  /**
+ * Provides an observable to monitor changes in user profile state.
+ * 
+ * @returns {Observable<any>} An observable for user profile updates.
+ */
   getUserProfileObservable(): Observable<any> {
-    return this.userProfileSubject.asObservable(); // Observe changes in user data
+    return this.userProfileSubject.asObservable();
   }
 
+  /**
+   * Sets the user profile and updates local storage.
+   * 
+   * @param {any} userProfile - The updated user profile data.
+   */
   setUserProfile(userProfile: any): void {
     this.userProfileSubject.next(userProfile);
     localStorage.setItem('userData', JSON.stringify(userProfile));
   }
 
-  //user registration
+  /**
+  * Registers a new user with the provided user details.
+  *
+  * @param {any} userDetails - The user details for registration.
+  * @returns {Observable<any>} An observable for the registration response.
+  */
   registerUser(userDetails: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/signup`, userDetails).pipe(
       catchError(this.handleError),
     );
   }
 
-  //user login
+  /**
+   * Logs in a user with the provided credentials.
+   *
+   * @param {any} credentials - The login credentials (username and password).
+   * @returns {Observable<any>} An observable for the login response.
+   */
   loginUser(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
@@ -57,14 +100,23 @@ export class FetchApiDataService {
     );
   }
 
-  //fetch all movies
+  /**
+    * Fetches all movies from the API.
+    *
+    * @returns {Observable<any>} An observable with the list of all movies.
+    */
   getAllMovies(): Observable<any> {
     return this.http.get(`${this.apiUrl}/movies`, { headers: this.getAuthHeaders() }).pipe(
       catchError(this.handleError),
     );
   }
 
-  //fetch user profile
+  /**
+     * Fetches the user profile for the given username.
+     *
+     * @param {string} username - The username of the user.
+     * @returns {Observable<any>} An observable for the user profile data.
+     */
   getUserProfile(username: string): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/users/${username}`, { headers }).pipe(
@@ -79,7 +131,13 @@ export class FetchApiDataService {
     );
   }
 
-  //add a movie to the user's favorites
+  /**
+   * Adds a movie to the user's favorites list.
+   *
+   * @param {string} username - The username of the user.
+   * @param {string} movieId - The ID of the movie to add to favorites.
+   * @returns {Observable<any>} An observable with the updated user profile.
+   */
   addMovieToFavorites(username: string, movieId: string): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/users/${username}/movies/${movieId}`, {}, { headers }).pipe(
@@ -91,7 +149,13 @@ export class FetchApiDataService {
     );
   }
 
-  //remove a movie from the user's favorites
+  /**
+  * Removes a movie from the user's favorites list.
+  *
+  * @param {string} username - The username of the user.
+  * @param {string} movieId - The ID of the movie to remove from favorites.
+  * @returns {Observable<any>} An observable with the updated user profile.
+  */
   removeMovieFromFavorites(username: string, movieId: string): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.delete(`${this.apiUrl}/users/${username}/movies/${movieId}`, { headers }).pipe(
@@ -103,7 +167,13 @@ export class FetchApiDataService {
     );
   }
 
-  //update user profile information
+  /**
+   * Updates the user profile with the provided profile updates.
+   *
+   * @param {string} username - The username of the user.
+   * @param {any} userProfileUpdates - The profile updates.
+   * @returns {Observable<any>} An observable with the updated user profile.
+   */
   updateUserProfile(username: string, userProfileUpdates: any): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.put(`${this.apiUrl}/users/${username}`, userProfileUpdates, { headers }).pipe(
@@ -115,7 +185,12 @@ export class FetchApiDataService {
     );
   }
 
-  //function to delete a user by username
+  /**
+ * Deletes the user account for the given username.
+ *
+ * @param {string} username - The username of the user.
+ * @returns {Observable<any>} An observable with the response to the delete request.
+ */
   deleteUserAccount(username: string): Observable<any> {
     const headers = this.getAuthHeaders();
 
@@ -131,7 +206,12 @@ export class FetchApiDataService {
 
 
 
-  //errors
+  /**
+     * Handles HTTP errors from API requests.
+     *
+     * @param {HttpErrorResponse} error - The HTTP error response.
+     * @returns {Observable<any>} An observable that throws an error message.
+     */
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
