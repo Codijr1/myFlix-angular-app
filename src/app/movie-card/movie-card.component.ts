@@ -31,28 +31,25 @@ export class MovieCardComponent {
   }
 
   onAddToFavorites(): void {
-    // Check if the movie is already in favorites
     const storedUser = localStorage.getItem('userData');
     let isAlreadyFavorite = false;
 
     if (storedUser) {
       const user = JSON.parse(storedUser);
 
-      // If the movie ID is in the user's favoriteMovies array
       isAlreadyFavorite = user.favoriteMovies.includes(this.movieData._id);
     }
 
     if (isAlreadyFavorite) {
       this.snackBar.open('Movie is already in favorites', 'Close', { duration: 3000 });
-      return; // Exit early if the movie is already a favorite
+      return;
     }
 
-    // Add the movie to favorites if it's not already there
+    //add  movie to favorites if it's not already there
     this.fetchApiData.addMovieToFavorites('Username', this.movieData._id).subscribe({
       next: (updatedUser) => {
         this.snackBar.open('Added to favorites', 'Close', { duration: 3000 });
 
-        // Update the user data in local storage
         localStorage.setItem('userData', JSON.stringify(updatedUser));
       },
       error: (error) => {
@@ -70,7 +67,7 @@ export class MovieCardComponent {
       this.fetchApiData.removeMovieFromFavorites(username, this.movieData._id).subscribe({
         next: () => {
           this.snackBar.open('Removed from favorites', 'Close', { duration: 3000 });
-          this.updateUserFavorites(false); // Update user data to remove the favorite
+          this.updateUserFavorites(false);
         },
         error: (error) => {
           console.error('Error removing from favorites:', error);
@@ -87,14 +84,14 @@ export class MovieCardComponent {
       const user = JSON.parse(storedUser);
 
       if (add) {
-        user.favoriteMovies.push(this.movieData._id); // Add the movie to favorites
+        user.favoriteMovies.push(this.movieData._id);
       } else {
         user.favoriteMovies = user.favoriteMovies.filter(
           (movieId: string) => movieId !== this.movieData._id
-        ); // Remove from favorites
+        );
       }
 
-      localStorage.setItem('userData', JSON.stringify(user)); // Store updated user data
+      localStorage.setItem('userData', JSON.stringify(user));
     }
   }
 

@@ -11,7 +11,7 @@ export class NavbarComponent {
   constructor(private router: Router, private authService: AuthService) { }
 
   onLogout(): void {
-    this.authService.logout(); // Handle logout, remove JWT, redirect to login
-    this.router.navigate(['welcome']); // Navigate to the welcome page after logout
+    this.authService.logout();
+    this.router.navigate(['welcome']);
   }
 }

@@ -27,6 +27,7 @@ import { MovieModalComponent } from './movie-modal/movie-modal.component';
 import { UpdateProfileModalComponent } from './update-profile-modal/update-profile-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
 
 
 const appRoutes: Routes = [
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     NavbarComponent,
     UserProfileComponent,
     MovieModalComponent,
-    UpdateProfileModalComponent
+    UpdateProfileModalComponent,
+    DeleteAccountDialogComponent
   ],
   imports: [
     BrowserModule,

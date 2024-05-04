@@ -8,20 +8,20 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig } from '@angular/materia
   styleUrls: ['./movie-modal.component.css'],
 })
 export class MovieModalComponent {
-  movieData: any; // Store movie data
+  movieData: any;
 
   constructor(
     public dialogRef: MatDialogRef<MovieModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any // Inject data from parent
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data && data.movieData) {
-      this.movieData = data.movieData; // Initialize movie data
+      this.movieData = data.movieData;
     } else {
-      console.error('Movie data is missing in MovieModalComponent'); // Log an error
+      console.error('Movie data is missing in MovieModalComponent');
     }
   }
 
   close(): void {
-    this.dialogRef.close(); // Close the modal
+    this.dialogRef.close();
   }
 }

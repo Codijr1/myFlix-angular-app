@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FetchApiDataService } from '../fetch-api-data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-update-profile-modal',
   templateUrl: './update-profile-modal.component.html',
   styleUrls: ['./update-profile-modal.component.css'],
 })
-export class UpdateProfileModalComponent implements OnInit {
+export class UpdateProfileModalComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
+  currentUserSubscription: Subscription | undefined;
+  currentUser: any;
 
   constructor(
     private fb: FormBuilder,
@@ -25,18 +28,21 @@ export class UpdateProfileModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.currentUserSubscription = this.fetchApiData.getUserProfileObservable().subscribe((user) => {
+      this.currentUser = user;
+    });
+  }
 
-  // Method to submit the form and update user information
   updateProfile(): void {
-    if (this.profileForm.valid) {
+    if (this.profileForm.valid && this.currentUser) {
       const formValues = this.profileForm.value;
-      const username = 'currentUserName'; // Get current user's username
+      const username = this.currentUser.Username;
 
       this.fetchApiData.updateUserProfile(username, formValues).subscribe(
         (updatedUser) => {
           console.log('User profile updated:', updatedUser);
-          this.dialogRef.close(); // Close the modal
+          this.dialogRef.close();
         },
         (error) => {
           console.error('Error updating user profile:', error);
@@ -45,8 +51,13 @@ export class UpdateProfileModalComponent implements OnInit {
     }
   }
 
-  // Method to close the modal without saving
   close(): void {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    if (this.currentUserSubscription) {
+      this.currentUserSubscription.unsubscribe();
+    }
   }
 }

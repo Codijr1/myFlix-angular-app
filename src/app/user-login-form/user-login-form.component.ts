@@ -10,13 +10,13 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./user-login-form.component.css'],
 })
 export class UserLoginFormComponent {
-  @Input() loginData = { Username: '', Password: '' }; // Credentials for login
+  @Input() loginData = { Username: '', Password: '' };
 
   constructor(
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     private snackBar: MatSnackBar,
     private router: Router,
-    private authService: AuthService // Use AuthService for authentication
+    private authService: AuthService
   ) { }
 
   login(): void {
@@ -27,17 +27,15 @@ export class UserLoginFormComponent {
 
     this.authService.loginUser(credentials).subscribe(
       (response) => {
-        // Close the dialog and navigate to movies on successful login
         this.dialogRef.close();
 
         this.snackBar.open('Login successful', 'OK', {
           duration: 2000,
         });
 
-        this.router.navigate(['movies']); // Redirect to movies page
+        this.router.navigate(['movies']); //redirect to movies page
       },
       (error) => {
-        // Handle login errors
         this.snackBar.open(
           'Login failed: ' + (error.error?.message || 'An error occurred'),
           'OK',

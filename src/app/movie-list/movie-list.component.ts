@@ -10,12 +10,11 @@ import { Router } from '@angular/router';
 })
 export class MovieListComponent implements OnInit {
   movies: any[] = [];
-  breakpoint: number = 4; // Default value to ensure initialization
+  breakpoint: number = 4;
 
   constructor(private fetchApiData: FetchApiDataService, private router: Router) { }
 
   ngOnInit(): void {
-    // Initialize breakpoint based on window width
     this.breakpoint = this.getBreakpoint(window.innerWidth);
 
     this.fetchApiData.getAllMovies().subscribe((movies) => {
@@ -23,24 +22,22 @@ export class MovieListComponent implements OnInit {
     });
   }
 
-  // Function to determine the number of grid columns based on screen width
   getBreakpoint(width: number): number {
     if (width <= 600) {
-      return 1; // Narrow screens
+      return 1;
     } else if (width <= 900) {
-      return 2; // Medium screens
+      return 2;
     } else {
-      return 4; // Wide screens
+      return 4;
     }
   }
 
-  // Adjust breakpoint on window resize
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.breakpoint = this.getBreakpoint(event.target.innerWidth);
   }
 
-  // Function to view movie details
+  //view movie details
   viewMovieDetails(title: string): void {
     this.router.navigate(['/movies', title]);
   }

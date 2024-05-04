@@ -12,6 +12,10 @@
         </mat-grid-tile>
     </mat-grid-list>
 
+    <button mat-raised-button color="warn" (click)="openDeleteAccountDialog()">
+        Delete Account
+    </button>
+
     <div *ngIf="favoriteMovies.length === 0">
         <p>No favorite movies found, try adding some and then come back here.</p>
     </div>
